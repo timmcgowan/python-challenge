@@ -11,7 +11,6 @@ logging.basicConfig(filename='debug.log',level=logging.DEBUG) # Because I prefer
 logging.info("Analysis Initiated")
 logging.info(os.path.dirname(os.path.abspath(__file__)))
 
-
 ## Got help on this one -> https://stackoverflow.com/questions/11325019/how-to-output-to-the-console-and-file/45917982
 class Tee(object):
     def __init__(self, *files):
@@ -27,10 +26,14 @@ class Tee(object):
 # Data Files - Variables to make my code reusable for the next project (DRY)
 fname = 'budget_data.csv' # Data/Resource file name
 ffolder = 'Resources' # Data/Resource folder nameif 
-reportfile = 'PyBankReport.txt' # Output text file name
+afolder = 'Analysis' # Data/Resource folder nameif 
+afilename = 'tmcgowan_results.txt' # Output text file name
 
 #logging.info("Opening path started", os.path.join(ffolder, fname) )
 csvData = os.path.join(ffolder, fname)
+if not os.path.exists(afolder):
+    os.makedirs(afolder)
+reportfile = os.path.join(afolder, afilename)
 
 #Some output formatting
 linebreak = "-------------------------------------"
@@ -106,10 +109,8 @@ with open(csvData, 'r') as csvfile:
     # The greatest decrease in losses (date and amount) over the entire period
     print('{0} {1} (${2})'.format('Greatest Decrease in Profits: ', minMonth, change_values[minMonth]))
 
-    # Output to terminal and text file. 
-    #sys.stdout.close()
-    
-    #use the original
+  
+    # Reset back to the original & close results file
     sys.stdout = original
     f.close()
 ###  EXAMPLE OUTPUT
